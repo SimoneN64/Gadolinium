@@ -9,7 +9,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 if (WIN32)
   add_compile_definitions(NOMINMAX)
 endif ()
-
+if(APPLE)
+  enable_language(OBJC)
+endif()
 include_directories(
   .
   ../
