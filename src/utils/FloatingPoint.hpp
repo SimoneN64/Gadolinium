@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 #include <common.hpp>
-#include <immintrin.h>
 
 namespace Util {
 static FORCE_INLINE auto roundCeil(float f) {

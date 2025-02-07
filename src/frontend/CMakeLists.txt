@@ -9,9 +9,11 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 if (WIN32)
   add_compile_definitions(NOMINMAX)
 endif ()
+
 if(APPLE)
   enable_language(OBJC)
 endif()
+
 include_directories(
   .
   ../
@@ -38,6 +40,7 @@ include_directories(
   ../../external/parallel-rdp/parallel-rdp-standalone/util
   ../../external/unarr
   ../../external/SDL/include
+  ../../external/sse2neon
   ../../external/capstone/include
 )
 
@@ -48,11 +51,22 @@ option(BUILD_SHARED_LIBS OFF)
 
 include(CheckCCompilerFlag)
 
-check_c_compiler_flag(-msse4.1 HAS_SSE4_1)
+check_c_compiler_flag(-msse4.1 HAS_SIMD)
+if(NOT HAS_SIMD)
+  check_c_compiler_flag(-mfpu=neon HAS_SIMD)
+  if(APPLE AND HAS_SIMD)
+    set(ARM_APPLE ON)
+    message("Compiling on ARM MacOS, very experimental and cool!")
+  endif()
+endif()
 
-if (HAS_SSE4_1)
+if (HAS_SIMD)
   add_compile_definitions(SIMD_SUPPORT)
-  add_compile_options(-msse3 -msse4.1)
+  if(ARM_APPLE)
+    add_compile_options(-mfpu=neon)
+  else()
+    add_compile_options(-msse3 -msse4.1)
+  endif()
 endif ()
 
 if (${CMAKE_BUILD_TYPE} MATCHES Debug)

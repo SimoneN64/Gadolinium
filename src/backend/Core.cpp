@@ -3,7 +3,7 @@
 #include <Scheduler.hpp>
 
 namespace n64 {
-Core::Core() : cpu(std::make_unique<JIT>(parallel)) {}
+Core::Core() : cpu(std::make_unique<Interpreter>(parallel)) {}
 
 void Core::Stop() {
   render = false;
