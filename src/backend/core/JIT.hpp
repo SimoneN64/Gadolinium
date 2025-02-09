@@ -18,6 +18,9 @@ static constexpr u32 kCodeCacheSize = 32_mb;
 static constexpr u32 kCodeCacheAllocSize = kCodeCacheSize + 4_kb;
 #define REG(acc, x) code.acc[code.rbp + (reinterpret_cast<uintptr_t>(&regs.x) - (uintptr_t)this)]
 
+#ifdef __aarch64__
+struct JIT : BaseCPU {};
+#else
 struct JIT : BaseCPU {
   explicit JIT(ParallelRDP &);
   ~JIT() override = default;
@@ -222,4 +225,5 @@ private:
   void xor_(u32);
   void xori(u32);
 };
+#endif
 } // namespace n64

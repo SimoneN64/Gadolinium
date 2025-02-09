@@ -357,12 +357,14 @@ void Mem::WriteInterpreter<u8>(Registers &regs, u32 paddr, u32 val) {
   }
 }
 
+#ifndef __aarch64__
 template <>
 void Mem::WriteJIT<u8>(Registers &regs, const u32 paddr, const u32 val) {
   WriteInterpreter<u8>(regs, paddr, val);
   if (jit)
     jit->InvalidateBlock(paddr);
 }
+#endif
 
 template <>
 void Mem::Write<u8>(Registers &regs, const u32 paddr, const u32 val) {
@@ -410,12 +412,14 @@ void Mem::WriteInterpreter<u16>(Registers &regs, u32 paddr, u32 val) {
   }
 }
 
+#ifndef __aarch64__
 template <>
 void Mem::WriteJIT<u16>(Registers &regs, const u32 paddr, const u32 val) {
   WriteInterpreter<u16>(regs, paddr, val);
   if (jit)
     jit->InvalidateBlock(paddr);
 }
+#endif
 
 template <>
 void Mem::Write<u16>(Registers &regs, const u32 paddr, const u32 val) {
@@ -460,23 +464,27 @@ void Mem::WriteInterpreter<u32>(Registers &regs, const u32 paddr, const u32 val)
   }
 }
 
+#ifndef __aarch64__
 template <>
 void Mem::WriteJIT<u32>(Registers &regs, const u32 paddr, const u32 val) {
   WriteInterpreter<u32>(regs, paddr, val);
   if (jit)
     jit->InvalidateBlock(paddr);
 }
+#endif
 
 template <>
 void Mem::Write<u32>(Registers &regs, const u32 paddr, const u32 val) {
   WriteInterpreter<u32>(regs, paddr, val);
 }
 
+#ifndef __aarch64__
 void Mem::WriteJIT(const Registers &regs, const u32 paddr, const u64 val) {
   WriteInterpreter(regs, paddr, val);
   if (jit)
     jit->InvalidateBlock(paddr);
 }
+#endif
 
 void Mem::Write(const Registers &regs, const u32 paddr, const u64 val) { WriteInterpreter(regs, paddr, val); }
 

@@ -2,6 +2,7 @@
 #include <jit/helpers.hpp>
 
 namespace n64 {
+#ifndef __aarch64__
 JIT::JIT(ParallelRDP &parallel) : regs(this), mem(regs, parallel, this) {
   blockCache.resize(kUpperSize);
   if (cs_open(CS_ARCH_MIPS, static_cast<cs_mode>(CS_MODE_MIPS64 | CS_MODE_BIG_ENDIAN), &disassemblerMips) !=
@@ -183,4 +184,5 @@ std::vector<u8> JIT::Serialize() {
 }
 
 void JIT::Deserialize(const std::vector<u8> &data) { memcpy(&regs, data.data(), sizeof(Registers)); }
+#endif
 } // namespace n64

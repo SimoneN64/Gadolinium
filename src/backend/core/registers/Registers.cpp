@@ -75,6 +75,7 @@ s8 Registers::Read<s8>(size_t idx) {
   return static_cast<s8>(Read<u8>(idx));
 }
 
+#ifndef __aarch64__
 template <>
 void Registers::Read<u64>(size_t idx, Xbyak::Reg reg) {
   jit->code.mov(reg.cvt64(), jit->GPR<u64>(idx));
@@ -114,6 +115,7 @@ template <>
 void Registers::Read<s8>(size_t idx, Xbyak::Reg reg) {
   jit->code.mov(reg.cvt8(), jit->GPR<s8>(idx));
 }
+#endif
 
 template <>
 void Registers::Write<bool>(size_t idx, bool v) {
@@ -195,6 +197,7 @@ void Registers::Write<s8>(size_t idx, s8 v) {
   gpr[idx] = v;
 }
 
+#ifndef __aarch64__
 template <>
 void Registers::Write<bool>(size_t idx, Xbyak::Reg v) {
   if (idx == 0)
@@ -310,4 +313,5 @@ template <>
 void Registers::Write<s64>(size_t idx, Xbyak::Reg v) {
   Write<u64>(idx, v);
 }
+#endif
 } // namespace n64
