@@ -1,7 +1,7 @@
 #pragma once
 #include <bitset>
 #include <cstdint>
-#ifdef __aarch64__
+#ifdef USE_NEON
 #include <sse2neon.h>
 #else
 #include <emmintrin.h>

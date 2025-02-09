@@ -3,7 +3,6 @@
 #include <RSP.hpp>
 #include <RSQ.hpp>
 #include <core/registers/Registers.hpp>
-#include <immintrin.h>
 #include <log.hpp>
 
 namespace n64 {

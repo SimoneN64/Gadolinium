@@ -277,7 +277,6 @@ private:
   [[nodiscard]] FORCE_INLINE u32 GetCount() const { return u32(u64(count >> 1)); }
 
   void decodeInterp(u32);
-  void decodeJIT(JIT &, u32);
   void mtc0(u32);
   void dmtc0(u32);
   void mfc0(u32);
