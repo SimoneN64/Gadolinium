@@ -229,8 +229,7 @@ struct Cop0 {
   TLBEntry tlb[32]{};
   TLBError tlbError = NONE;
   s64 openbus{};
-  template <class T>
-  void decode(T &, u32);
+
   [[nodiscard]] FORCE_INLINE u32 GetRandom() const {
     u32 val = rand();
     const auto wired_ = GetWired();
@@ -270,13 +269,13 @@ struct Cop0 {
   TLBEntry *TLBTryMatch(u64 vaddr) const;
   void HandleTLBException(u64 vaddr) const;
   static ExceptionCode GetTLBExceptionCode(TLBError error, TLBAccessType accessType);
+  void decode(u32);
 
 private:
   Registers &regs;
   [[nodiscard]] FORCE_INLINE u32 GetWired() const { return wired & 0x3F; }
   [[nodiscard]] FORCE_INLINE u32 GetCount() const { return u32(u64(count >> 1)); }
 
-  void decodeInterp(u32);
   void mtc0(u32);
   void dmtc0(u32);
   void mfc0(u32);

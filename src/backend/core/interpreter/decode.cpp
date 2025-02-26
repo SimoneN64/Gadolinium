@@ -301,7 +301,7 @@ void Interpreter::Exec(const u32 instr) {
     lui(instr);
     break;
   case COP0:
-    regs.cop0.decode(*this, instr);
+    regs.cop0.decode(instr);
     break;
   case COP1:
     {

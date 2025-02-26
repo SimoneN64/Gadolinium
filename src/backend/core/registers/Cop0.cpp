@@ -451,18 +451,7 @@ ExceptionCode Cop0::GetTLBExceptionCode(const TLBError error, const TLBAccessTyp
   }
 }
 
-template <class T>
-void Cop0::decode(T &cpu, u32 instr) {
-  if constexpr (std::is_same_v<decltype(cpu), Interpreter &>) {
-    decodeInterp(instr);
-  } else {
-    Util::panic("What the fuck did you just give me?!!");
-  }
-}
-
-template void Cop0::decode<Interpreter>(Interpreter &, u32);
-
-void Cop0::decodeInterp(const u32 instr) {
+void Cop0::decode(const u32 instr) {
   const u8 mask_cop = instr >> 21 & 0x1F;
   const u8 mask_cop2 = instr & 0x3F;
   switch (mask_cop) {

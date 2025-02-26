@@ -270,7 +270,7 @@ void JIT::Emit(const u32 instr) {
     lui(instr);
     break;
   case COP0:
-    regs.cop0.decode(*this, instr);
+    Util::panic("[JIT]: Unimplemented Cop0 decode");
     break;
   case COP1:
     {
